@@ -103,10 +103,13 @@ Economic Elite is a full-stack financial analysis platform that aggregates news,
 ## Changelog
 ```
 Changelog:
-- June 15, 2025. Initial setup
+- June 15, 2025. Initial setup with Economic Elite branding
+- June 15, 2025. Updated project name and branding throughout application
+- June 15, 2025. OpenAI API integration active for sentiment analysis and chart analysis
 ```
 
 ## User Preferences
 ```
 Preferred communication style: Simple, everyday language.
+Project name: Economic Elite (updated from previous generic name)
 ```

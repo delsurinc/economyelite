@@ -64,6 +64,7 @@ export class MemStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id: this.currentUserId++,
+      preferredLanguage: insertUser.preferredLanguage || null,
       createdAt: new Date(),
     };
     this.users.set(user.id, user);
@@ -74,6 +75,10 @@ export class MemStorage implements IStorage {
     const query: SearchQuery = {
       ...insertQuery,
       id: this.currentSearchQueryId++,
+      userId: insertQuery.userId || null,
+      priceLimit: insertQuery.priceLimit || null,
+      deepSearchEnabled: insertQuery.deepSearchEnabled || null,
+      timeRange: insertQuery.timeRange || null,
       createdAt: new Date(),
     };
     this.searchQueries.set(query.id, query);
@@ -88,6 +93,18 @@ export class MemStorage implements IStorage {
     const analysis: AnalysisResult = {
       ...insertAnalysis,
       id: this.currentAnalysisResultId++,
+      sentimentScore: insertAnalysis.sentimentScore || null,
+      technicalIndicators: insertAnalysis.technicalIndicators || null,
+      newsCount: insertAnalysis.newsCount || 0,
+      positiveNewsPercent: insertAnalysis.positiveNewsPercent || null,
+      neutralNewsPercent: insertAnalysis.neutralNewsPercent || null,
+      negativeNewsPercent: insertAnalysis.negativeNewsPercent || null,
+      price: insertAnalysis.price || null,
+      priceChange: insertAnalysis.priceChange || null,
+      socialMetrics: insertAnalysis.socialMetrics || null,
+      recommendation: insertAnalysis.recommendation || null,
+      riskLevel: insertAnalysis.riskLevel || null,
+      keyInsights: insertAnalysis.keyInsights || null,
       createdAt: new Date(),
     };
     this.analysisResults.set(analysis.id, analysis);
@@ -110,6 +127,14 @@ export class MemStorage implements IStorage {
     const article: NewsArticle = {
       ...insertArticle,
       id: this.currentNewsArticleId++,
+      content: insertArticle.content || null,
+      summary: insertArticle.summary || null,
+      sentiment: insertArticle.sentiment || null,
+      sentimentScore: insertArticle.sentimentScore || null,
+      url: insertArticle.url || null,
+      publishedAt: insertArticle.publishedAt || null,
+      originalLanguage: insertArticle.originalLanguage || null,
+      translatedContent: insertArticle.translatedContent || null,
       createdAt: new Date(),
     };
     this.newsArticles.set(article.id, article);
@@ -133,6 +158,7 @@ export class MemStorage implements IStorage {
     const analysis: ChartAnalysis = {
       ...insertAnalysis,
       id: this.currentChartAnalysisId++,
+      analysis: insertAnalysis.analysis || null,
       createdAt: new Date(),
     };
     this.chartAnalyses.set(analysis.id, analysis);
@@ -149,6 +175,7 @@ export class MemStorage implements IStorage {
     const report: Report = {
       ...insertReport,
       id: this.currentReportId++,
+      reportData: insertReport.reportData || null,
       createdAt: new Date(),
     };
     this.reports.set(report.id, report);
