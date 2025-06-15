@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(222, 47%, 11%);
+  --muted: hsl(210, 40%, 98%);
+  --muted-foreground: hsl(215, 13%, 65%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 47%, 11%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 47%, 11%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(45, 93%, 47%);
+  --primary-foreground: hsl(222, 47%, 11%);
+  --secondary: hsl(210, 40%, 98%);
+  --secondary-foreground: hsl(222, 84%, 4.9%);
+  --accent: hsl(210, 40%, 98%);
+  --accent-foreground: hsl(222, 84%, 4.9%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(222, 84%, 4.9%);
+  --radius: 0.5rem;
+  
+  /* Custom Economic Elite colors */
+  --elite-navy: hsl(234, 47%, 14%);
+  --elite-blue: hsl(221, 39%, 23%);
+  --elite-gold: hsl(45, 93%, 47%);
+  --elite-bg: hsl(222, 47%, 11%);
+  --elite-card: hsl(212, 26%, 18%);
+  --elite-border: hsl(215, 19%, 35%);
+  
+  /* Chart colors */
+  --chart-1: hsl(142, 76%, 36%);
+  --chart-2: hsl(346, 87%, 43%);
+  --chart-3: hsl(262, 83%, 58%);
+  --chart-4: hsl(47, 96%, 53%);
+  --chart-5: hsl(197, 71%, 52%);
+}
+
+.dark {
+  --background: hsl(222, 47%, 11%);
+  --foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 32%, 17%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --popover: hsl(222, 47%, 11%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --card: hsl(212, 26%, 18%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --border: hsl(215, 19%, 35%);
+  --input: hsl(215, 19%, 35%);
+  --primary: hsl(45, 93%, 47%);
+  --primary-foreground: hsl(222, 47%, 11%);
+  --secondary: hsl(217, 32%, 17%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --accent: hsl(217, 32%, 17%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 62%, 30%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(212, 72%, 59%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom utility classes for Economic Elite theme */
+.bg-elite-navy {
+  background-color: var(--elite-navy);
+}
+
+.bg-elite-blue {
+  background-color: var(--elite-blue);
+}
+
+.bg-elite-gold {
+  background-color: var(--elite-gold);
+}
+
+.bg-elite-bg {
+  background-color: var(--elite-bg);
+}
+
+.bg-elite-card {
+  background-color: var(--elite-card);
+}
+
+.text-elite-gold {
+  color: var(--elite-gold);
+}
+
+.text-elite-navy {
+  color: var(--elite-navy);
+}
+
+.border-elite-border {
+  border-color: var(--elite-border);
+}
+
+.border-elite-gold {
+  border-color: var(--elite-gold);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-elite {
+  background: linear-gradient(135deg, var(--elite-navy), var(--elite-blue));
+}
+
+.bg-gradient-gold {
+  background: linear-gradient(135deg, var(--elite-gold), hsl(45, 93%, 57%));
+}
+
+/* Loading animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--elite-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--elite-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--elite-gold);
+}
+
+/* Chart container styles */
+.recharts-wrapper {
+  font-family: 'Inter', sans-serif;
+}
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--elite-border);
+  opacity: 0.3;
+}
+
+/* File upload drop zone */
+.drop-zone {
+  transition: all 0.2s ease;
+}
+
+.drop-zone.drag-over {
+  border-color: var(--elite-gold);
+  background-color: hsl(45, 93%, 47%, 0.05);
+}
+
+/* Custom focus styles */
+.focus-elite:focus {
+  outline: 2px solid var(--elite-gold);
+  outline-offset: 2px;
+}
+
+/* Button hover effects */
+.btn-elite {
+  transition: all 0.2s ease;
+}
+
+.btn-elite:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Sentiment indicators */
+.sentiment-positive {
+  color: hsl(142, 76%, 36%);
+}
+
+.sentiment-negative {
+  color: hsl(346, 87%, 43%);
+}
+
+.sentiment-neutral {
+  color: hsl(47, 96%, 53%);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none;
+  }
+  
+  .mobile-full {
+    width: 100% !important;
+  }
+}
+
+/* Print styles for reports */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-page-break {
+    page-break-before: always;
+  }
+}
