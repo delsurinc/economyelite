@@ -47,33 +47,33 @@ export default function Dashboard() {
         selectedLanguage={selectedLanguage}
         onLanguageChange={setSelectedLanguage}
       />
-      
+
       <SearchSection 
         onAnalysisComplete={handleAnalysisComplete}
         onSearchStart={handleSearchStart}
         isAnalyzing={isAnalyzing}
       />
-      
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <MarketOverview />
-        
+
         {currentAnalysis && (
           <>
             <AnalysisResults 
               data={currentAnalysis}
               searchParams={searchParams}
             />
-            
+
             <ChartUpload 
               queryId={currentAnalysis.query?.id}
               symbol={currentAnalysis.analysisResult?.symbol}
             />
-            
+
             <NewsFeed 
-              newsArticles={currentAnalysis.newsArticles}
-              socialMetrics={currentAnalysis.socialMetrics}
+              newsArticles={currentAnalysis.newsArticles} 
+              symbol={searchParams?.symbol}
             />
-            
+
             {searchParams?.priceLimit && (
               <FilteredRecommendations 
                 priceLimit={searchParams.priceLimit}
@@ -82,7 +82,7 @@ export default function Dashboard() {
             )}
           </>
         )}
-        
+
         {!currentAnalysis && !isAnalyzing && (
           <div className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-6 bg-gradient-gold rounded-full flex items-center justify-center">
@@ -97,7 +97,7 @@ export default function Dashboard() {
           </div>
         )}
       </main>
-      
+
       <Footer />
     </div>
   );

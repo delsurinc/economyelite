@@ -70,6 +70,44 @@ export class NewsAggregatorService {
         publishedAt: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
         language: 'en'
       }
+    ],
+    'ADA': [
+      {
+        title: 'Cardano Ecosystem Shows Strong Growth in DeFi Applications',
+        content: 'The Cardano blockchain has seen significant growth in decentralized finance applications, with total value locked increasing by 40% this quarter.',
+        url: 'https://example.com/ada-defi',
+        source: 'CoinTelegraph',
+        publishedAt: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
+        language: 'en'
+      },
+      {
+        title: 'Major Partnership Announcement Boosts Cardano Adoption',
+        content: 'Cardano announces strategic partnership with leading enterprise software company, expanding real-world blockchain applications.',
+        url: 'https://example.com/ada-partnership',
+        source: 'CryptoNews',
+        publishedAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
+        language: 'en'
+      }
+    ],
+    'DOGE': [
+      {
+        title: 'Dogecoin Sees Increased Adoption in Payment Processing',
+        content: 'Several major payment processors announce support for Dogecoin, leading to increased transaction volume and positive market sentiment.',
+        url: 'https://example.com/doge-payments',
+        source: 'CoinDesk',
+        publishedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+        language: 'en'
+      }
+    ],
+    'XRP': [
+      {
+        title: 'Ripple Legal Victory Boosts XRP Market Confidence',
+        content: 'Recent legal developments favor Ripple in ongoing regulatory discussions, leading to increased investor confidence and trading volume.',
+        url: 'https://example.com/xrp-legal',
+        source: 'Reuters',
+        publishedAt: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
+        language: 'en'
+      }
     ]
   };
 

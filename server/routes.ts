@@ -274,20 +274,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/assets-under-price", async (req, res) => {
     try {
       const { maxPrice, assetType } = req.query;
-      if (!maxPrice) {
-        return res.status(400).json({ error: "Max price is required" });
+      if (!maxPrice || maxPrice === 'undefined') {
+        return res.json([]); // Return empty array instead of error
+      }
+      
+      const price = parseFloat(maxPrice as string);
+      if (isNaN(price)) {
+        return res.json([]);
       }
       
       const assets = await financialDataService.getAssetsUnderPrice(
-        parseFloat(maxPrice as string),
-        assetType as 'all' | 'stocks' | 'crypto'
+        price,
+        assetType as 'all' | 'stocks' | 'crypto' || 'all'
       );
       
       res.json(assets);
       
     } catch (error) {
       console.error("Price filter error:", error);
-      res.status(500).json({ error: "Failed to filter assets by price" });
+      res.json([]); // Return empty array instead of error
     }
   });
 

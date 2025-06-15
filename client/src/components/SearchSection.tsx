@@ -147,7 +147,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Enter stock symbol or cryptocurrency (e.g., AAPL, BTC, TSLA) - Optional if using price filter"
-                  className="text-gray-900 text-lg h-12 focus:ring-elite-gold focus:border-elite-gold"
+                  className="text-gray-900 text-lg h-12 focus:ring-elite-gold focus:border-elite-gold bg-white"
                   disabled={isAnalyzing}
                 />
               </div>
@@ -182,7 +182,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   value={priceLimit}
                   onChange={(e) => setPriceLimit(e.target.value)}
                   placeholder="Max price per share/coin"
-                  className="mt-2 text-gray-900 focus:ring-elite-gold focus:border-elite-gold"
+                  className="mt-2 text-gray-900 focus:ring-elite-gold focus:border-elite-gold bg-white"
                   disabled={isAnalyzing}
                 />
               </div>

@@ -21,11 +21,11 @@ interface SocialMetrics {
 }
 
 interface NewsFeedProps {
-  newsArticles: NewsArticle[];
-  socialMetrics: SocialMetrics;
+  newsArticles?: any[];
+  symbol?: string;
 }
 
-export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps) {
+export default function NewsFeed({ newsArticles = [], symbol }: NewsFeedProps) {
   if (!newsArticles?.length && !socialMetrics) return null;
 
   const getSentimentColor = (sentiment: string) => {
@@ -63,7 +63,7 @@ export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps)
     <section className="mb-12">
       <h3 className="text-2xl font-bold text-white mb-6">Latest News & Social Sentiment</h3>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
+
         {/* News Feed */}
         <Card className="bg-elite-card border-elite-border">
           <CardHeader className="border-b border-elite-border">
@@ -141,7 +141,7 @@ export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps)
                   </div>
                 </div>
               )}
-              
+
               {socialMetrics?.redditDiscussions && (
                 <div className="flex items-center justify-between p-3 bg-elite-blue rounded-lg">
                   <div className="flex items-center space-x-3">
@@ -156,7 +156,7 @@ export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps)
                   </div>
                 </div>
               )}
-              
+
               {socialMetrics?.communityScore && (
                 <div className="flex items-center justify-between p-3 bg-elite-blue rounded-lg">
                   <div className="flex items-center space-x-3">
@@ -172,7 +172,7 @@ export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps)
                 </div>
               )}
             </div>
-            
+
             {!socialMetrics?.twitterMentions && !socialMetrics?.redditDiscussions && !socialMetrics?.communityScore && (
               <div className="text-center py-8">
                 <i className="fas fa-comments text-3xl text-gray-400 mb-4"></i>

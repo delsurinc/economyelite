@@ -232,6 +232,46 @@ export class FinancialDataService {
       marketCap: 8900000000,
       high24h: 7.20,
       low24h: 6.55
+    },
+    'DOGE': {
+      symbol: 'DOGE',
+      price: 0.08,
+      change: 0.002,
+      changePercent: 2.56,
+      volume: 1234567890,
+      marketCap: 11200000000,
+      high24h: 0.085,
+      low24h: 0.075
+    },
+    'XRP': {
+      symbol: 'XRP',
+      price: 0.52,
+      change: -0.015,
+      changePercent: -2.81,
+      volume: 987654321,
+      marketCap: 28900000000,
+      high24h: 0.55,
+      low24h: 0.50
+    },
+    'MATIC': {
+      symbol: 'MATIC',
+      price: 0.89,
+      change: 0.045,
+      changePercent: 5.33,
+      volume: 456789123,
+      marketCap: 8200000000,
+      high24h: 0.92,
+      low24h: 0.84
+    },
+    'ALGO': {
+      symbol: 'ALGO',
+      price: 0.15,
+      change: 0.008,
+      changePercent: 5.63,
+      volume: 234567890,
+      marketCap: 1200000000,
+      high24h: 0.16,
+      low24h: 0.14
     }
   };
 
@@ -298,8 +338,11 @@ export class FinancialDataService {
       'SOLANA': 'solana',
       'DOT': 'polkadot',
       'POLKADOT': 'polkadot',
+      'DOGE': 'dogecoin',
+      'XRP': 'ripple',
       'MATIC': 'matic-network',
       'POLYGON': 'matic-network',
+      'ALGO': 'algorand',
       'AVAX': 'avalanche-2',
       'AVALANCHE': 'avalanche-2',
       'LINK': 'chainlink',
