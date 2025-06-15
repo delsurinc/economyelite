@@ -184,6 +184,15 @@
   outline-offset: 2px;
 }
 
+/* Input text visibility fix */
+input, textarea {
+  color: var(--foreground) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
 /* Button hover effects */
 .btn-elite {
   transition: all 0.2s ease;
