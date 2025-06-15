@@ -221,6 +221,19 @@ input::placeholder, textarea::placeholder {
   color: #111827 !important;
 }
 
+/* Force SelectValue component text color */
+[data-radix-select-value] {
+  color: #111827 !important;
+}
+
+/* Ensure all select text is visible */
+.bg-white [data-radix-select-trigger],
+.bg-white [data-radix-select-trigger] span,
+.bg-white [data-radix-select-value],
+.bg-white [data-radix-select-item] {
+  color: #111827 !important;
+}
+
 /* Button hover effects */
 .btn-elite {
   transition: all 0.2s ease;
