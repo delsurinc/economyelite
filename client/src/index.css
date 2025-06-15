@@ -198,8 +198,27 @@ input::placeholder, textarea::placeholder {
   color: var(--foreground) !important;
 }
 
+[data-radix-select-trigger] span {
+  color: var(--foreground) !important;
+}
+
 [data-radix-select-content] {
   color: var(--foreground) !important;
+}
+
+[data-radix-select-item] {
+  color: var(--foreground) !important;
+}
+
+[data-radix-select-value] {
+  color: var(--foreground) !important;
+}
+
+/* Force select text color in SearchSection */
+.text-gray-900 [data-radix-select-trigger],
+.text-gray-900 [data-radix-select-trigger] span,
+.text-gray-900 [data-radix-select-value] {
+  color: #111827 !important;
 }
 
 /* Button hover effects */
