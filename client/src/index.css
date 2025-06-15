@@ -185,12 +185,21 @@
 }
 
 /* Input text visibility fix */
-input, textarea {
+input, textarea, select {
   color: var(--foreground) !important;
 }
 
 input::placeholder, textarea::placeholder {
   color: var(--muted-foreground) !important;
+}
+
+/* Select dropdown text visibility */
+[data-radix-select-trigger] {
+  color: var(--foreground) !important;
+}
+
+[data-radix-select-content] {
+  color: var(--foreground) !important;
 }
 
 /* Button hover effects */
