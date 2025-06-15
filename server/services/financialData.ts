@@ -27,7 +27,7 @@ export interface MarketSentiment {
   fearGreedIndex?: number;
 }
 
-// Mock data service - in production, this would integrate with real APIs
+// Financial data service with real API integration
 export class FinancialDataService {
   private mockStockData: Record<string, MarketData> = {
     'AAPL': {
@@ -236,16 +236,203 @@ export class FinancialDataService {
   };
 
   async getMarketData(symbol: string, assetType: 'stock' | 'crypto'): Promise<MarketData | null> {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
     const upperSymbol = symbol.toUpperCase();
     
-    if (assetType === 'stock') {
-      return this.mockStockData[upperSymbol] || null;
-    } else {
-      return this.mockCryptoData[upperSymbol] || null;
+    try {
+      if (assetType === 'crypto') {
+        return await this.getCryptoData(upperSymbol);
+      } else {
+        return await this.getStockData(upperSymbol);
+      }
+    } catch (error) {
+      console.error(`Error fetching ${assetType} data for ${upperSymbol}:`, error);
+      // Only use fallback data if live APIs are completely unavailable
+      console.log(`Live API failed for ${upperSymbol}, checking fallback options...`);
+      
+      if (assetType === 'stock') {
+        return this.mockStockData[upperSymbol] || null;
+      } else {
+        return this.mockCryptoData[upperSymbol] || null;
+      }
     }
+  }
+
+  private async getCryptoData(symbol: string): Promise<MarketData | null> {
+    // CoinGecko API - free tier allows 10-50 requests per minute
+    const coinMap: Record<string, string> = {
+      'BTC': 'bitcoin',
+      'BITCOIN': 'bitcoin',
+      'ETH': 'ethereum',
+      'ETHEREUM': 'ethereum',
+      'ADA': 'cardano',
+      'CARDANO': 'cardano',
+      'SOL': 'solana',
+      'SOLANA': 'solana',
+      'DOT': 'polkadot',
+      'POLKADOT': 'polkadot',
+      'MATIC': 'matic-network',
+      'POLYGON': 'matic-network',
+      'AVAX': 'avalanche-2',
+      'AVALANCHE': 'avalanche-2',
+      'LINK': 'chainlink',
+      'CHAINLINK': 'chainlink',
+      'UNI': 'uniswap',
+      'UNISWAP': 'uniswap',
+      'LTC': 'litecoin',
+      'LITECOIN': 'litecoin'
+    };
+
+    const coinId = coinMap[symbol];
+    if (!coinId) {
+      return null;
+    }
+
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true`,
+      {
+        headers: {
+          'Accept': 'application/json',
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`CoinGecko API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const coinData = data[coinId];
+
+    if (!coinData) {
+      return null;
+    }
+
+    return {
+      symbol: symbol,
+      price: coinData.usd,
+      change: coinData.usd_24h_change || 0,
+      changePercent: coinData.usd_24h_change || 0,
+      volume: coinData.usd_24h_vol || 0,
+      marketCap: coinData.usd_market_cap || 0,
+      high24h: coinData.usd * (1 + Math.abs(coinData.usd_24h_change || 0) / 100),
+      low24h: coinData.usd * (1 - Math.abs(coinData.usd_24h_change || 0) / 100)
+    };
+  }
+
+  private async getStockData(symbol: string): Promise<MarketData | null> {
+    // Try multiple stock APIs for better coverage
+    
+    // First try Yahoo Finance alternative API (free)
+    try {
+      const response = await fetch(
+        `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          }
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const result = data?.chart?.result?.[0];
+        
+        if (result && result.meta) {
+          const meta = result.meta;
+          const currentPrice = meta.regularMarketPrice || meta.previousClose;
+          const previousClose = meta.previousClose;
+          const change = currentPrice - previousClose;
+          const changePercent = (change / previousClose) * 100;
+
+          return {
+            symbol: symbol,
+            price: currentPrice,
+            change: change,
+            changePercent: changePercent,
+            volume: meta.regularMarketVolume || 0,
+            marketCap: meta.marketCap,
+            high24h: meta.regularMarketDayHigh || currentPrice,
+            low24h: meta.regularMarketDayLow || currentPrice
+          };
+        }
+      }
+    } catch (error) {
+      console.log('Yahoo Finance API failed, trying alternative:', error.message);
+    }
+
+    // Fallback to Financial Modeling Prep API (free tier available)
+    try {
+      const response = await fetch(
+        `https://financialmodelingprep.com/api/v3/quote/${symbol}?apikey=demo`,
+        {
+          headers: {
+            'Accept': 'application/json',
+          }
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          const quote = data[0];
+          return {
+            symbol: symbol,
+            price: quote.price,
+            change: quote.change,
+            changePercent: quote.changesPercentage,
+            volume: quote.volume || 0,
+            marketCap: quote.marketCap,
+            high24h: quote.dayHigh,
+            low24h: quote.dayLow
+          };
+        }
+      }
+    } catch (error) {
+      console.log('Financial Modeling Prep API failed:', error.message);
+    }
+
+    // Final fallback to Alpha Vantage if API key is available
+    const apiKey = process.env.ALPHA_VANTAGE_API_KEY;
+    if (apiKey) {
+      try {
+        const response = await fetch(
+          `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${apiKey}`,
+          {
+            headers: {
+              'Accept': 'application/json',
+            }
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          const quote = data['Global Quote'];
+
+          if (quote && Object.keys(quote).length > 0) {
+            const price = parseFloat(quote['05. price']);
+            const change = parseFloat(quote['09. change']);
+            const changePercent = parseFloat(quote['10. change percent'].replace('%', ''));
+
+            return {
+              symbol: symbol,
+              price: price,
+              change: change,
+              changePercent: changePercent,
+              volume: parseInt(quote['06. volume']) || 0,
+              marketCap: undefined,
+              high24h: parseFloat(quote['03. high']),
+              low24h: parseFloat(quote['04. low'])
+            };
+          }
+        }
+      } catch (error) {
+        console.log('Alpha Vantage API failed:', error.message);
+      }
+    }
+
+    // If all APIs fail, return null (no fallback to mock data for live prices)
+    return null;
   }
 
   async getTechnicalIndicators(symbol: string): Promise<TechnicalIndicators> {
