@@ -234,6 +234,32 @@ input::placeholder, textarea::placeholder {
   color: #111827 !important;
 }
 
+/* More forceful select text overrides */
+[data-radix-select-trigger] * {
+  color: #111827 !important;
+}
+
+[data-radix-select-content] * {
+  color: #111827 !important;
+}
+
+/* Target the specific select components in SearchSection */
+.bg-white select,
+.bg-white [role="combobox"],
+.bg-white [role="listbox"],
+.bg-white [role="option"] {
+  color: #111827 !important;
+}
+
+/* Override any inherited text colors */
+* [data-radix-select-trigger],
+* [data-radix-select-trigger] span,
+* [data-radix-select-value],
+* [data-radix-select-item],
+* [data-radix-select-item-text] {
+  color: #111827 !important;
+}
+
 /* Button hover effects */
 .btn-elite {
   transition: all 0.2s ease;

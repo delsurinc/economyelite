@@ -152,13 +152,13 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   Asset Type
                 </Label>
                 <Select value={assetType} onValueChange={setAssetType} disabled={isAnalyzing}>
-                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900">
-                    <SelectValue className="text-gray-900" />
+                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900" style={{color: '#111827'}}>
+                    <SelectValue className="text-gray-900" style={{color: '#111827'}} />
                   </SelectTrigger>
-                  <SelectContent className="text-gray-900">
-                    <SelectItem value="all" className="text-gray-900">All Assets</SelectItem>
-                    <SelectItem value="stocks" className="text-gray-900">Stocks Only</SelectItem>
-                    <SelectItem value="crypto" className="text-gray-900">Crypto Only</SelectItem>
+                  <SelectContent className="text-gray-900" style={{color: '#111827'}}>
+                    <SelectItem value="all" className="text-gray-900" style={{color: '#111827'}}>All Assets</SelectItem>
+                    <SelectItem value="stocks" className="text-gray-900" style={{color: '#111827'}}>Stocks Only</SelectItem>
+                    <SelectItem value="crypto" className="text-gray-900" style={{color: '#111827'}}>Crypto Only</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -167,13 +167,13 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   Time Range
                 </Label>
                 <Select value={timeRange} onValueChange={setTimeRange} disabled={isAnalyzing}>
-                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900">
-                    <SelectValue className="text-gray-900" />
+                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900" style={{color: '#111827'}}>
+                    <SelectValue className="text-gray-900" style={{color: '#111827'}} />
                   </SelectTrigger>
-                  <SelectContent className="text-gray-900">
-                    <SelectItem value="7d" className="text-gray-900">Last 7 Days</SelectItem>
-                    <SelectItem value="30d" className="text-gray-900">Last 30 Days</SelectItem>
-                    <SelectItem value="90d" className="text-gray-900">Last 90 Days</SelectItem>
+                  <SelectContent className="text-gray-900" style={{color: '#111827'}}>
+                    <SelectItem value="7d" className="text-gray-900" style={{color: '#111827'}}>Last 7 Days</SelectItem>
+                    <SelectItem value="30d" className="text-gray-900" style={{color: '#111827'}}>Last 30 Days</SelectItem>
+                    <SelectItem value="90d" className="text-gray-900" style={{color: '#111827'}}>Last 90 Days</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
