@@ -24,18 +24,57 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
   const { toast } = useToast();
 
   const handleSearch = async () => {
+    // If no search query is provided, check if we have filters to work with
     if (!searchQuery.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a stock symbol or cryptocurrency name",
-        variant: "destructive",
-      });
-      return;
+      if (!priceLimit) {
+        toast({
+          title: "Error",
+          description: "Please enter a stock symbol or set a price limit to filter assets",
+          variant: "destructive",
+        });
+        return;
+      }
     }
 
     onSearchStart();
 
     try {
+      // If no symbol provided, use price filtering endpoint
+      if (!searchQuery.trim() && priceLimit) {
+        const response = await apiRequest("GET", `/api/assets-under-price?maxPrice=${priceLimit}&assetType=${assetType}`);
+        const assets = await response.json();
+        
+        if (assets.length === 0) {
+          toast({
+            title: "No Results",
+            description: `No ${assetType === 'all' ? '' : assetType} assets found under $${priceLimit}`,
+            variant: "destructive",
+          });
+          onAnalysisComplete(null as any, {} as SearchParams);
+          return;
+        }
+
+        // For now, analyze the first asset found
+        const firstAsset = assets[0];
+        const searchParams: SearchParams = {
+          symbol: firstAsset.symbol,
+          assetType,
+          priceLimit: parseFloat(priceLimit),
+          timeRange,
+          deepSearchEnabled,
+        };
+
+        const analysisResponse = await apiRequest("POST", "/api/analyze", searchParams);
+        const data = await analysisResponse.json();
+        onAnalysisComplete(data, searchParams);
+
+        toast({
+          title: "Analysis Complete",
+          description: `Found ${assets.length} assets under $${priceLimit}. Analyzing ${firstAsset.symbol}`,
+        });
+        return;
+      }
+
       const searchParams: SearchParams = {
         symbol: searchQuery.trim().toUpperCase(),
         assetType,
@@ -107,7 +146,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Enter stock symbol or cryptocurrency (e.g., AAPL, BTC, TSLA)"
+                  placeholder="Enter stock symbol or cryptocurrency (e.g., AAPL, BTC, TSLA) - Optional if using price filter"
                   className="text-gray-900 text-lg h-12 focus:ring-elite-gold focus:border-elite-gold"
                   disabled={isAnalyzing}
                 />

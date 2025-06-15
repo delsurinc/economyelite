@@ -38,7 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let marketData = null;
       let finalAssetType = queryData.assetType;
       
-      if (queryData.assetType === 'all' || !queryData.assetType) {
+      if (queryData.assetType === 'all') {
         // Try stocks first
         marketData = await financialDataService.getMarketData(queryData.symbol, 'stock');
         if (marketData) {
@@ -52,6 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       } else {
         // Use specified asset type
+        finalAssetType = queryData.assetType || 'stock';
         marketData = await financialDataService.getMarketData(queryData.symbol, finalAssetType as 'stock' | 'crypto');
       }
       

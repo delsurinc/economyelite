@@ -235,8 +235,36 @@ export class FinancialDataService {
     }
   };
 
+  private getSymbolFromName(input: string): string {
+    const nameToSymbol: Record<string, string> = {
+      // Stock companies
+      'APPLE': 'AAPL',
+      'TESLA': 'TSLA',
+      'MICROSOFT': 'MSFT',
+      'GOOGLE': 'GOOGL',
+      'ALPHABET': 'GOOGL',
+      'AMAZON': 'AMZN',
+      'NVIDIA': 'NVDA',
+      'META': 'META',
+      'FACEBOOK': 'META',
+      'NETFLIX': 'NFLX',
+      'AMD': 'AMD',
+      'INTEL': 'INTC',
+      // Crypto currencies
+      'BITCOIN': 'BTC',
+      'ETHEREUM': 'ETH',
+      'CARDANO': 'ADA',
+      'SOLANA': 'SOL',
+      'POLKADOT': 'DOT',
+    };
+    
+    const upperInput = input.toUpperCase();
+    return nameToSymbol[upperInput] || upperInput;
+  }
+
   async getMarketData(symbol: string, assetType: 'stock' | 'crypto'): Promise<MarketData | null> {
-    const upperSymbol = symbol.toUpperCase();
+    const mappedSymbol = this.getSymbolFromName(symbol);
+    const upperSymbol = mappedSymbol.toUpperCase();
     
     try {
       if (assetType === 'crypto') {
