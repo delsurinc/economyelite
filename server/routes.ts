@@ -34,18 +34,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const queryData = insertSearchQuerySchema.parse(req.body);
       const query = await storage.createSearchQuery(queryData);
       
-      // Determine asset type if not specified
-      let assetType = queryData.assetType;
-      if (!assetType || assetType === 'all') {
-        // Try to determine from symbol
-        const marketData = await financialDataService.getMarketData(queryData.symbol, 'stock');
-        assetType = marketData ? 'stock' : 'crypto';
+      // Try to find the asset in both stocks and crypto
+      let marketData = null;
+      let finalAssetType = queryData.assetType;
+      
+      if (queryData.assetType === 'all' || !queryData.assetType) {
+        // Try stocks first
+        marketData = await financialDataService.getMarketData(queryData.symbol, 'stock');
+        if (marketData) {
+          finalAssetType = 'stock';
+        } else {
+          // Try crypto if not found in stocks
+          marketData = await financialDataService.getMarketData(queryData.symbol, 'crypto');
+          if (marketData) {
+            finalAssetType = 'crypto';
+          }
+        }
+      } else {
+        // Use specified asset type
+        marketData = await financialDataService.getMarketData(queryData.symbol, finalAssetType as 'stock' | 'crypto');
       }
       
-      // Get market data
-      const marketData = await financialDataService.getMarketData(queryData.symbol, assetType as 'stock' | 'crypto');
       if (!marketData) {
-        return res.status(404).json({ error: "Asset not found" });
+        return res.status(404).json({ 
+          error: "Asset not found", 
+          message: `Could not find data for symbol "${queryData.symbol}". Available symbols include: AAPL, TSLA, MSFT, GOOGL, NVDA, BTC, ETH, SOL, ADA, DOT and more.`
+        });
       }
       
       // Get technical indicators

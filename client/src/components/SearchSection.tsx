@@ -61,11 +61,23 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
       });
     } catch (error) {
       console.error("Analysis error:", error);
-      toast({
-        title: "Analysis Failed",
-        description: error instanceof Error ? error.message : "Failed to analyze the asset",
-        variant: "destructive",
-      });
+      
+      // Check if it's a 404 error with asset not found message
+      const errorMessage = error instanceof Error ? error.message : "Failed to analyze the asset";
+      
+      if (errorMessage.includes("Asset not found")) {
+        toast({
+          title: "Symbol Not Found",
+          description: `"${searchParams.symbol}" not found. Try: AAPL, TSLA, MSFT, GOOGL, NVDA, BTC, ETH, SOL, ADA, DOT`,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Analysis Failed",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
       onAnalysisComplete(null as any, {} as SearchParams);
     }
   };

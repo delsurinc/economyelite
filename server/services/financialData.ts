@@ -59,12 +59,92 @@ export class FinancialDataService {
       marketCap: 2810000000000,
       high24h: 380.50,
       low24h: 375.20
+    },
+    'GOOGL': {
+      symbol: 'GOOGL',
+      price: 142.56,
+      change: 1.89,
+      changePercent: 1.34,
+      volume: 23456789,
+      marketCap: 1800000000000,
+      high24h: 144.20,
+      low24h: 140.80
+    },
+    'AMZN': {
+      symbol: 'AMZN',
+      price: 154.23,
+      change: -2.45,
+      changePercent: -1.56,
+      volume: 34567890,
+      marketCap: 1600000000000,
+      high24h: 157.80,
+      low24h: 152.10
+    },
+    'NVDA': {
+      symbol: 'NVDA',
+      price: 875.30,
+      change: 12.45,
+      changePercent: 1.44,
+      volume: 45678901,
+      marketCap: 2150000000000,
+      high24h: 880.50,
+      low24h: 860.20
+    },
+    'META': {
+      symbol: 'META',
+      price: 485.20,
+      change: 8.90,
+      changePercent: 1.87,
+      volume: 18765432,
+      marketCap: 1250000000000,
+      high24h: 490.60,
+      low24h: 478.40
+    },
+    'NFLX': {
+      symbol: 'NFLX',
+      price: 485.67,
+      change: -6.78,
+      changePercent: -1.38,
+      volume: 8765432,
+      marketCap: 215000000000,
+      high24h: 492.80,
+      low24h: 482.10
+    },
+    'AMD': {
+      symbol: 'AMD',
+      price: 142.80,
+      change: 3.25,
+      changePercent: 2.33,
+      volume: 32165498,
+      marketCap: 230000000000,
+      high24h: 145.20,
+      low24h: 138.90
+    },
+    'INTC': {
+      symbol: 'INTC',
+      price: 43.25,
+      change: -0.85,
+      changePercent: -1.93,
+      volume: 28456789,
+      marketCap: 180000000000,
+      high24h: 44.50,
+      low24h: 42.80
     }
   };
 
   private mockCryptoData: Record<string, MarketData> = {
     'BTC': {
       symbol: 'BTC',
+      price: 43567.89,
+      change: 1234.56,
+      changePercent: 2.92,
+      volume: 28394756123,
+      marketCap: 850000000000,
+      high24h: 44200.00,
+      low24h: 42800.00
+    },
+    'BITCOIN': {
+      symbol: 'BITCOIN',
       price: 43567.89,
       change: 1234.56,
       changePercent: 2.92,
@@ -83,6 +163,16 @@ export class FinancialDataService {
       high24h: 2420.00,
       low24h: 2330.00
     },
+    'ETHEREUM': {
+      symbol: 'ETHEREUM',
+      price: 2345.67,
+      change: -89.45,
+      changePercent: -3.67,
+      volume: 15678934567,
+      marketCap: 282000000000,
+      high24h: 2420.00,
+      low24h: 2330.00
+    },
     'ADA': {
       symbol: 'ADA',
       price: 0.45,
@@ -92,6 +182,56 @@ export class FinancialDataService {
       marketCap: 15800000000,
       high24h: 0.47,
       low24h: 0.42
+    },
+    'CARDANO': {
+      symbol: 'CARDANO',
+      price: 0.45,
+      change: 0.023,
+      changePercent: 5.38,
+      volume: 567894123,
+      marketCap: 15800000000,
+      high24h: 0.47,
+      low24h: 0.42
+    },
+    'SOL': {
+      symbol: 'SOL',
+      price: 98.45,
+      change: 4.23,
+      changePercent: 4.49,
+      volume: 892341567,
+      marketCap: 43500000000,
+      high24h: 102.80,
+      low24h: 94.20
+    },
+    'SOLANA': {
+      symbol: 'SOLANA',
+      price: 98.45,
+      change: 4.23,
+      changePercent: 4.49,
+      volume: 892341567,
+      marketCap: 43500000000,
+      high24h: 102.80,
+      low24h: 94.20
+    },
+    'DOT': {
+      symbol: 'DOT',
+      price: 6.78,
+      change: -0.34,
+      changePercent: -4.78,
+      volume: 234567890,
+      marketCap: 8900000000,
+      high24h: 7.20,
+      low24h: 6.55
+    },
+    'POLKADOT': {
+      symbol: 'POLKADOT',
+      price: 6.78,
+      change: -0.34,
+      changePercent: -4.78,
+      volume: 234567890,
+      marketCap: 8900000000,
+      high24h: 7.20,
+      low24h: 6.55
     }
   };
 
@@ -99,11 +239,13 @@ export class FinancialDataService {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    const data = assetType === 'stock' 
-      ? this.mockStockData[symbol.toUpperCase()]
-      : this.mockCryptoData[symbol.toUpperCase()];
+    const upperSymbol = symbol.toUpperCase();
     
-    return data || null;
+    if (assetType === 'stock') {
+      return this.mockStockData[upperSymbol] || null;
+    } else {
+      return this.mockCryptoData[upperSymbol] || null;
+    }
   }
 
   async getTechnicalIndicators(symbol: string): Promise<TechnicalIndicators> {
