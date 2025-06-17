@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anyone to read documents in the 'products' collection
+    // Allow only authenticated users to write (create, update, delete) documents in the 'products' collection
+    match /products/{document=**} {
+      allow read: true;
+      allow write: if request.auth != null;
+    }
+
+    // IMPORTANT: By default, all other collections in your database are not allowed to be read or written.
+    // If you add other collections later (e.g., 'sales', 'users'), you'll need to add specific rules for them.
+    // For example, for a 'sales' collection, you might allow authenticated users to create sales:
+    // match /sales/{document=**} {
+    //   allow create: if request.auth != null;
+    //   allow read: if request.auth != null && resource.data.userId == request.auth.uid; // Example: users can only read their own sales
+    // }
+  }
+}
