@@ -40,15 +40,15 @@ export default function Header({ selectedLanguage, onLanguageChange }: HeaderPro
           {/* Language Selector */}
           <div className="flex items-center space-x-4">
             <Select value={selectedLanguage} onValueChange={onLanguageChange}>
-              <SelectTrigger className="w-32 bg-elite-blue border-elite-border text-gray-300 focus:ring-elite-gold">
-                <SelectValue />
+              <SelectTrigger className="w-32 bg-white border-gray-300 text-gray-900 focus:ring-elite-gold focus:border-elite-gold">
+                <SelectValue className="text-gray-900" />
               </SelectTrigger>
-              <SelectContent className="bg-elite-blue border-elite-border">
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="es">Español</SelectItem>
-                <SelectItem value="fr">Français</SelectItem>
-                <SelectItem value="de">Deutsch</SelectItem>
-                <SelectItem value="zh">中文</SelectItem>
+              <SelectContent className="bg-white border-gray-300">
+                <SelectItem value="en" className="text-gray-900 hover:bg-gray-100">English</SelectItem>
+                <SelectItem value="es" className="text-gray-900 hover:bg-gray-100">Español</SelectItem>
+                <SelectItem value="fr" className="text-gray-900 hover:bg-gray-100">Français</SelectItem>
+                <SelectItem value="de" className="text-gray-900 hover:bg-gray-100">Deutsch</SelectItem>
+                <SelectItem value="zh" className="text-gray-900 hover:bg-gray-100">中文</SelectItem>
               </SelectContent>
             </Select>
             <button className="md:hidden text-gray-300 hover:text-elite-gold transition-colors">

@@ -139,6 +139,45 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Economic Elite Input Field Visibility Fixes */
+input[type="text"], input[type="number"] {
+  background-color: white !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+input[type="text"]::placeholder, input[type="number"]::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+/* Economic Elite Select Dropdown Fixes */
+[data-radix-select-trigger] {
+  background-color: white !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+[data-radix-select-content] {
+  background-color: white !important;
+  border: 1px solid #d1d5db !important;
+}
+
+[data-radix-select-item] {
+  color: #111827 !important;
+}
+
+[data-radix-select-item]:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
