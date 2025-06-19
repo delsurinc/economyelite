@@ -107,7 +107,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
       if (errorMessage.includes("Asset not found")) {
         toast({
           title: "Symbol Not Found",
-          description: `"${searchParams.symbol}" not found. Try: AAPL, TSLA, MSFT, GOOGL, NVDA, BTC, ETH, SOL, ADA, DOT`,
+          description: `"${searchQuery}" not found. Try: AAPL, TSLA, MSFT, GOOGL, NVDA, BTC, ETH, SOL, ADA, DOT`,
           variant: "destructive",
         });
       } else {
@@ -146,8 +146,8 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Enter stock symbol or cryptocurrency (e.g., AAPL, BTC, TSLA) - Optional if using price filter"
-                  className="text-gray-900 text-lg h-12 focus:ring-elite-gold focus:border-elite-gold bg-white"
+                  placeholder="Enter stock symbol or cryptocurrency (e.g., AAPL, BTC, TSLA)"
+                  className="text-gray-900 placeholder:text-gray-500 text-lg h-12 focus:ring-elite-gold focus:border-elite-gold bg-white border-gray-300"
                   disabled={isAnalyzing}
                 />
               </div>
@@ -182,7 +182,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   value={priceLimit}
                   onChange={(e) => setPriceLimit(e.target.value)}
                   placeholder="Max price per share/coin"
-                  className="mt-2 text-gray-900 focus:ring-elite-gold focus:border-elite-gold bg-white"
+                  className="mt-2 text-gray-900 placeholder:text-gray-500 focus:ring-elite-gold focus:border-elite-gold bg-white border-gray-300"
                   disabled={isAnalyzing}
                 />
               </div>
@@ -191,13 +191,13 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   Asset Type
                 </Label>
                 <Select value={assetType} onValueChange={setAssetType} disabled={isAnalyzing}>
-                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900" style={{color: '#111827'}}>
-                    <SelectValue className="text-gray-900" style={{color: '#111827'}} />
+                  <SelectTrigger className="mt-2 text-gray-900 bg-white border-gray-300 focus:ring-elite-gold focus:border-elite-gold">
+                    <SelectValue className="text-gray-900" />
                   </SelectTrigger>
-                  <SelectContent className="text-gray-900" style={{color: '#111827'}}>
-                    <SelectItem value="all" className="text-gray-900" style={{color: '#111827'}}>All Assets</SelectItem>
-                    <SelectItem value="stocks" className="text-gray-900" style={{color: '#111827'}}>Stocks Only</SelectItem>
-                    <SelectItem value="crypto" className="text-gray-900" style={{color: '#111827'}}>Crypto Only</SelectItem>
+                  <SelectContent className="bg-white border-gray-300">
+                    <SelectItem value="all" className="text-gray-900 hover:bg-gray-100">All Assets</SelectItem>
+                    <SelectItem value="stocks" className="text-gray-900 hover:bg-gray-100">Stocks Only</SelectItem>
+                    <SelectItem value="crypto" className="text-gray-900 hover:bg-gray-100">Crypto Only</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -206,13 +206,13 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                   Time Range
                 </Label>
                 <Select value={timeRange} onValueChange={setTimeRange} disabled={isAnalyzing}>
-                  <SelectTrigger className="mt-2 text-gray-900 focus:ring-elite-gold [&>span]:text-gray-900" style={{color: '#111827'}}>
-                    <SelectValue className="text-gray-900" style={{color: '#111827'}} />
+                  <SelectTrigger className="mt-2 text-gray-900 bg-white border-gray-300 focus:ring-elite-gold focus:border-elite-gold">
+                    <SelectValue className="text-gray-900" />
                   </SelectTrigger>
-                  <SelectContent className="text-gray-900" style={{color: '#111827'}}>
-                    <SelectItem value="7d" className="text-gray-900" style={{color: '#111827'}}>Last 7 Days</SelectItem>
-                    <SelectItem value="30d" className="text-gray-900" style={{color: '#111827'}}>Last 30 Days</SelectItem>
-                    <SelectItem value="90d" className="text-gray-900" style={{color: '#111827'}}>Last 90 Days</SelectItem>
+                  <SelectContent className="bg-white border-gray-300">
+                    <SelectItem value="7d" className="text-gray-900 hover:bg-gray-100">Last 7 Days</SelectItem>
+                    <SelectItem value="30d" className="text-gray-900 hover:bg-gray-100">Last 30 Days</SelectItem>
+                    <SelectItem value="90d" className="text-gray-900 hover:bg-gray-100">Last 90 Days</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -224,7 +224,7 @@ export default function SearchSection({ onAnalysisComplete, onSearchStart, isAna
                 <Checkbox
                   id="deepSearch"
                   checked={deepSearchEnabled}
-                  onCheckedChange={setDeepSearchEnabled}
+                  onCheckedChange={(checked) => setDeepSearchEnabled(checked === true)}
                   disabled={isAnalyzing}
                   className="data-[state=checked]:bg-elite-gold data-[state=checked]:border-elite-gold"
                 />

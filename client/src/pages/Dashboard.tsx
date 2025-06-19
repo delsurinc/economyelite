@@ -71,7 +71,7 @@ export default function Dashboard() {
 
             <NewsFeed 
               newsArticles={currentAnalysis.newsArticles} 
-              symbol={searchParams?.symbol}
+              socialMetrics={currentAnalysis.socialMetrics}
             />
 
             {searchParams?.priceLimit && (

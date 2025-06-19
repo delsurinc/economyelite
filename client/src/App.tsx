@@ -7,6 +7,7 @@ import Dashboard from "@/pages/Dashboard";
 
 function Router() {
   return (
+
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route component={Dashboard} />

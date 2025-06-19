@@ -21,11 +21,11 @@ interface SocialMetrics {
 }
 
 interface NewsFeedProps {
-  newsArticles?: any[];
-  symbol?: string;
+  newsArticles: NewsArticle[];
+  socialMetrics: SocialMetrics;
 }
 
-export default function NewsFeed({ newsArticles = [], symbol }: NewsFeedProps) {
+export default function NewsFeed({ newsArticles, socialMetrics }: NewsFeedProps) {
   if (!newsArticles?.length && !socialMetrics) return null;
 
   const getSentimentColor = (sentiment: string) => {
@@ -42,11 +42,11 @@ export default function NewsFeed({ newsArticles = [], symbol }: NewsFeedProps) {
   const getSentimentDot = (sentiment: string) => {
     switch (sentiment?.toLowerCase()) {
       case 'positive':
-        return 'bg-green-500';
+        return 'bg-green-400';
       case 'negative':
-        return 'bg-red-500';
+        return 'bg-red-400';
       default:
-        return 'bg-yellow-500';
+        return 'bg-yellow-400';
     }
   };
 
@@ -87,22 +87,27 @@ export default function NewsFeed({ newsArticles = [], symbol }: NewsFeedProps) {
                         </p>
                       )}
                       <div className="flex items-center flex-wrap gap-2 text-xs">
-                        <span className="text-gray-500">
-                          {formatTimeAgo(article.publishedAt)}
+                        <span className="text-gray-400">
+                          {new Date(article.publishedAt || new Date()).toLocaleDateString('en-US', {
+                            month: '2-digit',
+                            day: '2-digit', 
+                            year: 'numeric'
+                          })}
                         </span>
                         <Badge className={getSentimentColor(article.sentiment)}>
-                          {article.sentiment}
+                          {article.sentiment || 'neutral'}
                         </Badge>
-                        <span className="text-gray-500">{article.source}</span>
-                        {article.url && (
+                        {article.url ? (
                           <a 
                             href={article.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-elite-gold hover:underline"
+                            className="text-blue-400 hover:text-blue-300 underline"
                           >
-                            Read more
+                            {article.source || 'source'}
                           </a>
+                        ) : (
+                          <span className="text-gray-500">{article.source || 'source'}</span>
                         )}
                       </div>
                     </div>
@@ -133,52 +138,43 @@ export default function NewsFeed({ newsArticles = [], symbol }: NewsFeedProps) {
                     <i className="fab fa-twitter text-blue-400"></i>
                     <span className="text-gray-300">Twitter/X Mentions</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-white font-bold">
-                      {socialMetrics.twitterMentions.toLocaleString()}
-                    </span>
-                    <p className="text-xs text-green-400">24h activity</p>
-                  </div>
+                  <span className="text-white font-semibold">
+                    {socialMetrics.twitterMentions.toLocaleString()}
+                  </span>
                 </div>
               )}
-
+              
               {socialMetrics?.redditDiscussions && (
                 <div className="flex items-center justify-between p-3 bg-elite-blue rounded-lg">
                   <div className="flex items-center space-x-3">
                     <i className="fab fa-reddit text-orange-400"></i>
                     <span className="text-gray-300">Reddit Discussions</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-white font-bold">
-                      {socialMetrics.redditDiscussions.toLocaleString()}
-                    </span>
-                    <p className="text-xs text-yellow-400">Active threads</p>
-                  </div>
+                  <span className="text-white font-semibold">
+                    {socialMetrics.redditDiscussions.toLocaleString()}
+                  </span>
                 </div>
               )}
-
+              
               {socialMetrics?.communityScore && (
                 <div className="flex items-center justify-between p-3 bg-elite-blue rounded-lg">
                   <div className="flex items-center space-x-3">
                     <i className="fas fa-users text-purple-400"></i>
                     <span className="text-gray-300">Community Score</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-white font-bold">
-                      {socialMetrics.communityScore.toFixed(1)}/10
-                    </span>
-                    <p className="text-xs text-green-400">Very Positive</p>
-                  </div>
+                  <span className="text-white font-semibold">
+                    {socialMetrics.communityScore.toFixed(1)}/10
+                  </span>
+                </div>
+              )}
+              
+              {(!socialMetrics?.twitterMentions && !socialMetrics?.redditDiscussions && !socialMetrics?.communityScore) && (
+                <div className="text-center py-8">
+                  <i className="fas fa-chart-line text-3xl text-gray-400 mb-4"></i>
+                  <p className="text-gray-400">No social metrics available</p>
                 </div>
               )}
             </div>
-
-            {!socialMetrics?.twitterMentions && !socialMetrics?.redditDiscussions && !socialMetrics?.communityScore && (
-              <div className="text-center py-8">
-                <i className="fas fa-comments text-3xl text-gray-400 mb-4"></i>
-                <p className="text-gray-400">No social media data available</p>
-              </div>
-            )}
           </CardContent>
         </Card>
       </div>
